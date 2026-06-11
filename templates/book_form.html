@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+{% from "macros.html" import render_book_form %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-8">
+        <h2>{% if is_edit %}Редактирование книги{% else %}Добавление книги{% endif %}</h2>
+        <form method="POST" enctype="multipart/form-data">
+            {{ render_book_form(book, genres, selected_genres, is_edit) }}
+            <div class="mb-3">
+                <button type="submit" class="btn btn-success">Сохранить</button>
+                <a href="{{ url_for('books.index') }}" class="btn btn-secondary">Отмена</a>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        var easyMDE = new EasyMDE({ element: document.getElementById('short_description') });
+    });
+</script>
+{% endblock %}

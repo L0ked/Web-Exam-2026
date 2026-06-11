@@ -1,0 +1,35 @@
+version: '3.8'
+
+services:
+  db:
+    image: mysql:8.0
+    container_name: library_db
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpassword
+      MYSQL_DATABASE: library_db
+    ports:
+      - "3306:3306"
+    volumes:
+      - db_data:/var/lib/mysql
+    restart: always
+
+  web:
+    build: .
+    container_name: library_web
+    ports:
+      - "5000:5000"
+    environment:
+      MYSQL_HOST: db
+      MYSQL_USER: root
+      MYSQL_PASSWORD: rootpassword
+      MYSQL_DB: library_db
+      SECRET_KEY: supersecretkey
+    depends_on:
+      - db
+    volumes:
+      - static_covers:/app/static/covers
+    restart: always
+
+volumes:
+  db_data:
+  static_covers:

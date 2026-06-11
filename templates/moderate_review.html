@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-8">
+        <h2>Рассмотрение рецензии</h2>
+        <div class="card mt-4">
+            <div class="card-header">
+                <strong>Книга:</strong> {{ review.book_title }}<br>
+                <strong>Автор рецензии:</strong> {{ review.last_name }} {{ review.first_name }} {{ review.middle_name or '' }}<br>
+                <strong>Дата:</strong> {{ review.created_at.strftime('%Y-%m-%d %H:%M') }}
+            </div>
+            <div class="card-body">
+                <h5 class="card-title">Оценка: {{ review.rating }}/5</h5>
+                <div class="card-text mt-3">
+                    {{ review.html_text|safe }}
+                </div>
+            </div>
+            <div class="card-footer d-flex justify-content-end">
+                <form action="{{ url_for('reviews.process_review', review_id=review.id, action='reject') }}" method="POST" class="me-2">
+                    <button type="submit" class="btn btn-danger">Отклонить</button>
+                </form>
+                <form action="{{ url_for('reviews.process_review', review_id=review.id, action='approve') }}" method="POST">
+                    <button type="submit" class="btn btn-success">Одобрить</button>
+                </form>
+            </div>
+        </div>
+        <div class="mt-3">
+            <a href="{{ url_for('reviews.moderate') }}" class="btn btn-secondary">Назад к списку</a>
+        </div>
+    </div>
+</div>
+{% endblock %}

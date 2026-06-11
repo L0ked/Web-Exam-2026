@@ -1,0 +1,12 @@
+.git/
+.gitignore
+.dockerignore
+.env
+.venv/
+venv/
+env/
+__pycache__/
+*.pyc
+.idea/
+.vscode/
+static/covers/

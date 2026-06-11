@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-8">
+        <h2>Написание рецензии</h2>
+        <h4>Книга: {{ book.title }}</h4>
+        <form method="POST">
+            <div class="mb-3">
+                <label for="rating" class="form-label">Оценка *</label>
+                <select class="form-select" id="rating" name="rating" required>
+                    <option value="5" selected>отлично</option>
+                    <option value="4">хорошо</option>
+                    <option value="3">удовлетворительно</option>
+                    <option value="2">неудовлетворительно</option>
+                    <option value="1">плохо</option>
+                    <option value="0">ужасно</option>
+                </select>
+            </div>
+            <div class="mb-3">
+                <label for="text" class="form-label">Текст рецензии *</label>
+                <textarea class="form-control" id="text" name="text"></textarea>
+            </div>
+            <button type="submit" class="btn btn-success">Сохранить</button>
+            <a href="{{ url_for('books.show', book_id=book_id) }}" class="btn btn-secondary">Отмена</a>
+        </form>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        var easyMDE = new EasyMDE({ element: document.getElementById('text') });
+    });
+</script>
+{% endblock %}
